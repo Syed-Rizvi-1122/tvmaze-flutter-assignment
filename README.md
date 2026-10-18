@@ -119,7 +119,7 @@ graph LR
 
 ```
 tvmaze/
-├── lib/
+└── lib/
     ├── main.dart
     ├── core/
     │   ├── constants/app_constants.dart
