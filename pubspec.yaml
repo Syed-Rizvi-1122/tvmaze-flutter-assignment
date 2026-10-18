@@ -1,0 +1,45 @@
+name: tvmaze
+description: "TVMaze Explorer - Discover, search, and track your favorite TV shows."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State management
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  equatable: ^2.0.5
+
+  # Networking
+  http: ^1.2.2
+
+  # Reactive extensions for BLoC transformers
+  rxdart: ^0.28.0
+
+  # Local storage
+  shared_preferences: ^2.3.2
+
+  # Image caching
+  cached_network_image: ^3.4.1
+
+  # UI helpers
+  shimmer: ^3.0.0
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  bloc_test: ^9.1.7
+  mocktail: ^1.0.4
+
+flutter:
+  uses-material-design: true
