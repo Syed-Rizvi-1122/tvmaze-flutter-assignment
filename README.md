@@ -49,9 +49,6 @@ A production-grade, highly polished television exploration mobile application de
   - App-level `WatchlistBloc` mounted above `MaterialApp` for real-time cross-screen synchronization.
   - Swipe-to-dismiss deletion with undo feedback, clear-all modal, and glowing empty state with an "Explore Shows" deep-link button.
 
-- **Student Viva & Project Profile**:
-  - Dedicated 4th tab displaying student credentials, live calculated watchlist statistics (count, average rating, top genre), architecture breakdown, and TVMaze API attribution.
-
 ---
 
 ## Aesthetic & Design System
@@ -162,17 +159,8 @@ tvmaze/
 │       │   ├── data/datasources/watchlist_local_datasource.dart
 │       │   ├── data/repositories/watchlist_repository.dart
 │       │   └── presentation/screens/watchlist_screen.dart
-│       └── profile/
-│           └── presentation/screens/profile_screen.dart
-└── test/
-    ├── core/network/api_client_test.dart
-    ├── features/shows/bloc/shows_bloc_test.dart
-    ├── features/search/bloc/search_bloc_test.dart
-    ├── features/details/bloc/show_details_bloc_test.dart
-    ├── features/details/data/details_repository_test.dart
-    ├── features/watchlist/bloc/watchlist_bloc_test.dart
-    ├── features/watchlist/data/watchlist_local_datasource_test.dart
-    └── widget_test.dart
+|       └── profile/
+|           └── presentation/screens/profile_screen.dart
 ```
 
 ---
@@ -222,42 +210,3 @@ The test suite covers unit and BLoC tests across all critical seams:
 **Result:** `29/29 tests passed (100% success rate)` with **0 static analyzer issues**.
 
 ---
-
-## Examiner Viva Defense Guide
-
-### 1. Why use the BLoC pattern instead of `setState` or Provider/Riverpod?
-> **Answer:** BLoC enforces strict **separation of concerns** and **unidirectional data flow**. The UI only knows how to dispatch Events and render based on States. It has zero knowledge of HTTP endpoints, JSON parsing, or database logic. This makes every business rule 100% testable in pure Dart without needing to spin up widgets or mock Flutter frameworks. Furthermore, `bloc_test` provides deterministic state sequence verification.
-
-### 2. How did you prevent excessive API calls while the user is typing in Search?
-> **Answer:** In `SearchBloc`, we attach an event transformer to `SearchQueryChanged` using `rxdart`:
-> ```dart
-> events.debounceTime(const Duration(milliseconds: 500)).distinct().switchMap(mapper);
-> ```
-> This waits for 500 milliseconds of user inactivity before executing the query. If the user changes text rapidly, intermediate keystrokes are discarded. `switchMap` cancels any in-flight request if a newer query arrives before the previous one completes.
-
-### 3. How does infinite scroll pagination work on the Home Screen?
-> **Answer:** `HomeScreen` attaches a scroll listener to `ScrollController`. When the user scrolls within 300 pixels of the bottom (`maxScrollExtent - 300`), it dispatches `LoadMoreShowsEvent()`.
-> In `ShowsBloc`, we check two conditions before fetching:
-> 1. `state.hasReachedMax`: Prevents redundant requests once the catalog ends.
-> 2. `state.isLoadingMore`: Prevents duplicate requests if the user bounces at the bottom while a request is in flight.
-> When the API returns an empty list, `hasReachedMax` is set to `true`, permanently disabling further scroll events.
-
-### 4. How are Show Details, Cast, and Episodes retrieved concurrently?
-> **Answer:** Rather than chaining three requests sequentially (which would take `T1 + T2 + T3` latency), `ShowDetailsBloc` executes them in parallel using `Future.wait`:
-> ```dart
-> final results = await Future.wait([
->   _repository.getShow(event.showId),
->   _repository.getCast(event.showId),
->   _repository.getEpisodesBySeason(event.showId),
-> ]);
-> ```
-> Total fetch time equals only `max(T1, T2, T3)`, delivering a significantly faster and smoother user experience.
-
-### 5. How are episodes grouped by season?
-> **Answer:** The TVMaze API returns a flat list of episodes. In `DetailsRepository.groupEpisodesBySeason(episodes)`, we bucket episodes into a `Map<int, List<Episode>>` using `putIfAbsent(ep.season, () => []).add(ep)`. We then sort the episode list within each season by episode number ascending, and sort the season keys ascending. This pure function is independently tested in `details_repository_test.dart`.
-
-### 6. How is watchlist state kept in sync between the Details screen and the Watchlist tab?
-> **Answer:** `WatchlistBloc` is mounted as an **app-level BLoC** above `MaterialApp` in `lib/main.dart`. When a user toggles the watchlist button on `ShowDetailsScreen`, it dispatches `ToggleWatchlistEvent` to the shared `WatchlistBloc`. Because both `ShowDetailsScreen` and `WatchlistScreen` listen to the same instance, the UI updates instantly across all screens with zero manual event buses or callbacks.
-
-### 7. How does the app handle offline persistence and corrupted local data?
-> **Answer:** `WatchlistLocalDataSource` serializes the saved show list to JSON strings stored in `SharedPreferences` under key `watchlist_shows_v1`. To protect the app from crashing if cached data is malformed or corrupted, `loadWatchlist()` wraps deserialization in a `try-catch` block that safely falls back to returning an empty list `[]` rather than throwing an unhandled exception.
