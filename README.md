@@ -18,7 +18,6 @@ A production-grade, highly polished television exploration mobile application de
 5. [Project Structure](#project-structure)
 6. [Getting Started & Running Locally](#getting-started--running-locally)
 7. [Test Suite & Validation](#test-suite--validation)
-8. [Examiner Viva Defense Guide](#examiner-viva-defense-guide)
 
 ---
 
@@ -121,46 +120,46 @@ graph LR
 ```
 tvmaze/
 ├── lib/
-│   ├── main.dart
-│   ├── core/
-│   │   ├── constants/app_constants.dart
-│   │   ├── errors/exceptions.dart
-│   │   ├── network/api_client.dart
-│   │   ├── theme/app_theme.dart
-│   │   ├── utils/html_utils.dart
-│   │   └── widgets/
-│   │       ├── app_network_image.dart
-│   │       ├── error_view.dart
-│   │       ├── info_chip.dart
-│   │       ├── rating_badge.dart
-│   │       └── shimmer_box.dart
-│   └── features/
-│       ├── shell/main_navigation_shell.dart
-│       ├── shows/
-│       │   ├── bloc/shows_bloc.dart, shows_event.dart, shows_state.dart
-│       │   ├── data/models/show.dart, show_parser.dart
-│       │   ├── data/datasources/shows_remote_datasource.dart
-│       │   ├── data/repositories/shows_repository.dart
-│       │   └── presentation/screens/home_screen.dart, widgets/
-│       ├── search/
-│       │   ├── bloc/search_bloc.dart, search_event.dart, search_state.dart
-│       │   ├── data/datasources/search_remote_datasource.dart
-│       │   ├── data/repositories/search_repository.dart
-│       │   └── presentation/screens/search_screen.dart
-│       ├── details/
-│       │   ├── bloc/show_details_bloc.dart, show_details_event.dart, show_details_state.dart
-│       │   ├── data/models/episode.dart, cast_member.dart
-│       │   ├── data/datasources/details_remote_datasource.dart
-│       │   ├── data/repositories/details_repository.dart
-│       │   └── presentation/screens/show_details_screen.dart
-│       ├── watchlist/
-│       │   ├── bloc/watchlist_bloc.dart, watchlist_event.dart, watchlist_state.dart
-│       │   ├── data/models/watchlist_show.dart
-│       │   ├── data/datasources/watchlist_local_datasource.dart
-│       │   ├── data/repositories/watchlist_repository.dart
-│       │   └── presentation/screens/watchlist_screen.dart
-|       └── profile/
-|           └── presentation/screens/profile_screen.dart
+    ├── main.dart
+    ├── core/
+    │   ├── constants/app_constants.dart
+    │   ├── errors/exceptions.dart
+    │   ├── network/api_client.dart
+    │   ├── theme/app_theme.dart
+    │   ├── utils/html_utils.dart
+    │   └── widgets/
+    │       ├── app_network_image.dart
+    │       ├── error_view.dart
+    │       ├── info_chip.dart
+    │       ├── rating_badge.dart
+    │       └── shimmer_box.dart
+    └── features/
+        ├── shell/main_navigation_shell.dart
+        ├── shows/
+        │   ├── bloc/shows_bloc.dart, shows_event.dart, shows_state.dart
+        │   ├── data/models/show.dart, show_parser.dart
+        │   ├── data/datasources/shows_remote_datasource.dart
+        │   ├── data/repositories/shows_repository.dart
+        │   └── presentation/screens/home_screen.dart, widgets/
+        ├── search/
+        │   ├── bloc/search_bloc.dart, search_event.dart, search_state.dart
+        │   ├── data/datasources/search_remote_datasource.dart
+        │   ├── data/repositories/search_repository.dart
+        │   └── presentation/screens/search_screen.dart
+        ├── details/
+        │   ├── bloc/show_details_bloc.dart, show_details_event.dart, show_details_state.dart
+        │   ├── data/models/episode.dart, cast_member.dart
+        │   ├── data/datasources/details_remote_datasource.dart
+        │   ├── data/repositories/details_repository.dart
+        │   └── presentation/screens/show_details_screen.dart
+        ├── watchlist/
+        │   ├── bloc/watchlist_bloc.dart, watchlist_event.dart, watchlist_state.dart
+        │   ├── data/models/watchlist_show.dart
+        │   ├── data/datasources/watchlist_local_datasource.dart
+        │   ├── data/repositories/watchlist_repository.dart
+        │   └── presentation/screens/watchlist_screen.dart
+        └── profile/
+            └── presentation/screens/profile_screen.dart
 ```
 
 ---
