@@ -17,7 +17,6 @@ A production-grade, highly polished television exploration mobile application de
 4. [Unidirectional Data Flow](#unidirectional-data-flow)
 5. [Project Structure](#project-structure)
 6. [Getting Started & Running Locally](#getting-started--running-locally)
-7. [Test Suite & Validation](#test-suite--validation)
 
 ---
 
@@ -177,35 +176,7 @@ cd tvmaze
 flutter pub get
 ```
 
-### 2. Run Tests & Static Analysis
+### 2. Launch the Application
 ```bash
-flutter analyze
-flutter test
-```
-
-### 3. Launch the Application
-```bash
-# Run on connected emulator or device
 flutter run
 ```
-
----
-
-## Test Suite & Validation
-
-The test suite covers unit and BLoC tests across all critical seams:
-
-| Test Suite | File | Cases Covered |
-|---|---|---|
-| **ApiClient** | `api_client_test.dart` | HTTP 200 JSON decode, 404 `NotFoundException`, 500 `ServerException`, SocketException `NetworkException` |
-| **ShowsBloc** | `shows_bloc_test.dart` | Initial fetch loading/loaded, network error recovery, pagination append, `hasReachedMax` terminal guard |
-| **SearchBloc** | `search_bloc_test.dart` | Empty query reset, loaded results, empty zero-results state, clear query event, network error handling |
-| **DetailsRepository** | `details_repository_test.dart` | Pure episode grouping logic by season, season ascending sort, in-season episode number sort, empty input safety |
-| **ShowDetailsBloc** | `show_details_bloc_test.dart` | Concurrent `Future.wait` combination of show, cast, and episodes, and network failure state |
-| **WatchlistDataSource** | `watchlist_local_datasource_test.dart` | Empty prefs initialization, JSON deserialize, corrupt JSON error resilience, JSON serialize and save |
-| **WatchlistBloc** | `watchlist_bloc_test.dart` | Initial load, toggle add to watchlist, toggle remove from watchlist, clear all items |
-| **App Shell Widget** | `widget_test.dart` | Full app initialization, 4-tab bottom navigation rendering, and `IndexedStack` tab switching |
-
-**Result:** `29/29 tests passed (100% success rate)` with **0 static analyzer issues**.
-
----
